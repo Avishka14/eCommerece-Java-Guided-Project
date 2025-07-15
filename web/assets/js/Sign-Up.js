@@ -23,7 +23,19 @@ async function SignUp() {
                 header: {
                     "Content-Type": "application/json"
                 }
-            }
-    );
+            });
+
+    if (response.ok) {
+        const json = await response.json();
+
+        if (json.status) {
+            window.location = "verify-account.html";
+        } else { //when status false
+            document.getElementById("message").innerHTML = json.message;
+        }
+
+    } else {
+        document.getElementById("message").innerHTML = "Registration failed. Please try again";
+    }
 
 }
