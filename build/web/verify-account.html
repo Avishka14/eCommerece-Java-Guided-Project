@@ -39,7 +39,7 @@
                     <a href="#" class="site-logo"><img src="./assets/images/logo/logo.png" alt="logo"></a>
                 </div>
                 <div class="col-md-2 d-lg-block d-none">
-                    <a href="#" class="back-btn"><i class="far fa-angle-left"></i></a>
+                    <a href="sign-in.html" class="back-btn"><i class="far fa-angle-left"></i></a>
                 </div>
                 <div class="col-xl-6 col-lg-4 col-sm-6">
                     <div class="singin-header-btn">
@@ -64,15 +64,15 @@
                         
                         <p class="b2 mb--10">Please verify your email to secure your account and unlock all features. Click the button below to complete the process.</p>
                         
-                        <p class="text-danger"></p>
+                        <p id="message" class="text-danger"></p>
                         
                         <form class="singin-form">
                             <div class="form-group">
                                 <label>Verification Code</label>
-                                <input type="text" class="form-control" value="">
+                                <input id ="verificationCode" type="text" class="form-control" value="">
                             </div>
                             <div class="form-group">
-                                <button type="button" class="axil-btn btn-bg-primary submit-btn">Verify & Continue</button>
+                                <button onclick ="verifyAccount();" type="button" class="axil-btn btn-bg-primary submit-btn">Verify & Continue</button>
                             </div>
                         </form>
                     </div>
@@ -104,6 +104,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/verify-account.js"></script>
     
 </body>
 

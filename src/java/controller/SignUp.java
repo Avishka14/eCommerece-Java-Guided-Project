@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Mail;
 import model.Util;
 import org.hibernate.Criteria;
@@ -79,9 +80,9 @@ public class SignUp extends HttpServlet {
 
                 u.setCreated_at(new Date());
 
+                //hibernate save
                 s.save(u);
                 s.beginTransaction().commit();
-                //hibernate save
 
                 //send email
                 new Thread(new Runnable() {
@@ -90,7 +91,11 @@ public class SignUp extends HttpServlet {
                         Mail.sendMail(email, "Smart Trade Verify ", "<h1>" + verificationCode + "</h1>");
                     }
                 }).start();
-
+                
+                //create a session
+                HttpSession ses = request.getSession();
+                ses.setAttribute("email", email);
+                
                 responseObject.addProperty("status", true);
                 responseObject.addProperty("message", "Registration Success ! Please Check Your "
                         + "E-Mail for the Verification Code");
