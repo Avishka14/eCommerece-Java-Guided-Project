@@ -31,7 +31,7 @@
     </head>
 
 
-    <body class="sticky-header" onload="loadData();">
+    <body class="sticky-header" onload="loadData(); loadProductData();">
         <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
@@ -239,12 +239,14 @@
                                             
                                             <div class="welcome-text">Create New Product</div>
                                             
+                                              <p id="message" class="text-danger"></p>
+                                              
                                             <form class="account-details-form">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label>Category</label>
-                                                            <select>
+                                                            <label>Brand</label>
+                                                            <select id="brand" onchange="loadModels();" >
                                                                 <option value="0">Select</option>
                                                             </select>
                                                         </div>
@@ -252,7 +254,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Model</label>
-                                                            <select>
+                                                            <select id="model">
                                                                 <option value="0">Select</option>
                                                             </select>
                                                         </div>
@@ -260,20 +262,20 @@
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <label>Title</label>
-                                                            <input type="text" class="form-control" value="">
+                                                            <input id="title" type="text" class="form-control" value="" >
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <label>Description</label>
-                                                            <textarea cols="1" rows="2"></textarea>
+                                                            <textarea id="description" cols="1" rows="2"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Storage</label>
-                                                            <select>
+                                                            <select id="storage">
                                                                 <option value="0">Select</option>
                                                             </select>
                                                         </div>
@@ -281,7 +283,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label>Color</label>
-                                                            <select>
+                                                            <select id="color">
                                                                 <option value="0">Select</option>
                                                             </select>
                                                         </div>
@@ -290,7 +292,7 @@
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label>Condition</label>
-                                                            <select>
+                                                            <select id="condition">
                                                                <option value="0">Select</option>
                                                             </select>
                                                         </div>
@@ -299,34 +301,34 @@
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label>Price</label>
-                                                            <input type="text" class="form-control" pattern="^\d+(\.\d{2})?$" placeholder="0.00">
+                                                            <input id="price" type="text" class="form-control" pattern="^\d+(\.\d{2})?$" placeholder="0.00">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label>Quantity</label>
-                                                            <input type="number" class="form-control" min="1" value="1">
+                                                            <input id="qty" type="number" class="form-control" min="1" value="1">
                                                         </div>
                                                     </div> 
 
                                                     <div class="col-lg-4">
                                                         <label>Image 1</label>
-                                                        <input class="form-control b2" type="file" accept="image/*">
+                                                        <input id="img1" class="form-control b2" type="file" accept="image/*">
                                                     </div>
 
                                                     <div class="col-lg-4">
                                                         <label>Image 2</label>
-                                                        <input class="form-control b2" type="file" accept="image/*">
+                                                        <input id="img2" class="form-control b2" type="file" accept="image/*">
                                                     </div>
 
                                                     <div class="col-lg-4">
                                                         <label>Image 3</label>
-                                                        <input class="form-control b2" type="file" accept="image/*">
+                                                        <input id="img3" class="form-control b2" type="file" accept="image/*">
                                                     </div>
 
                                                     <div class="col-12">
                                                         <div class="form-group mb--0 mt--30 d-grid">
-                                                            <input type="button" class="axil-btn" value="Add Product To Listing">
+                                                            <input onclick="saveProduct();" type="button" class="axil-btn" value="Add Product To Listing">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -400,11 +402,11 @@
                                                             <h4 class="title mb-0">Current Shipping Address</h4>
                                                             <a href="#" class="address-edit"><i class="far fa-edit"></i></a>
                                                         </div>
-                                                        <ul class="address-details">
-                                                            <li>Name: Name</li>
-                                                            <li>Email:  example@email.com</li>
-                                                            <li>Phone:  Phone Number</li>
-                                                            <li class="mt--30"></li>
+                                                        <ul class="address-details" id="addressUL" >
+                                                            <li id="addName">Name: Name</li>
+                                                            <li id="addEmail"> Email:  example@email.com</li>
+                                                            <li id="contact">Phone:  Phone Number</li>
+                                 
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -482,6 +484,9 @@
                                             
                                             </div>
                                         </div>
+                                        
+                                        <p class="text-danger" id="message">message</p>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -762,6 +767,7 @@
         <script src="assets/js/main.js"></script>
         <script src="assets/js/sign-out.js"></script>
         <script src="assets/js/my-acccount.js"></script>
+        <script src="assets/js/product-listing.js"></script>
 
     </body>
 
