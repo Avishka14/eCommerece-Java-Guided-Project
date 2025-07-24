@@ -1,5 +1,6 @@
 
 var modelList;
+const popUp = Notification();
 
 async function loadProductData() {
 
@@ -15,7 +16,7 @@ async function loadProductData() {
             loadSelect("storage", json.storageList, "value");
             loadSelect("color", json.colorList, "value");
             loadSelect("condition", json.qualityList, "value");
-           
+
 
         } else {
             document.getElementById("message").innerHTML = "Unable to get product data! Please try again Later";
@@ -68,6 +69,7 @@ async function saveProduct() {
     const storageid = document.getElementById("storage").value;
     const colorid = document.getElementById("color").value;
     const conditionid = document.getElementById("condition").value;
+    const price = document.getElementById("price").value;
     const qty = document.getElementById("qty").value;
 
     const image1 = document.getElementById("img1").files[0];
@@ -84,6 +86,7 @@ async function saveProduct() {
     form.append("colorid", colorid);
     form.append("conditionid", conditionid);
     form.append("qty", qty);
+    form.append("price", price);
     form.append("image1", image1);
     form.append("image2", image2);
     form.append("image3", image3);
@@ -95,6 +98,33 @@ async function saveProduct() {
                 body: form
             }
     );
+
+
+    if (response.ok) {
+
+        const json = await response.json();
+
+        if (json.status) {
+
+
+        } else {
+
+            if (json.message === "Please sign in!") {
+                window.location = "sign-in.html";
+
+            } else {
+
+                popUp.error({
+                    message: json.message
+                });
+
+            }
+
+        }
+
+    } else {
+
+    }
 
 
 }

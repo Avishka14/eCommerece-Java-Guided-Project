@@ -12,7 +12,6 @@ import javax.mail.internet.MimeMessage;
 
 
 public class Mail {
-    
      private static final String APP_EMAIL = "";        //Sender Mail
     private static final String APP_PASSWORD = "";   //app password   
 
